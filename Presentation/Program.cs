@@ -1,7 +1,9 @@
+using AutoMapper;
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Services.Abstracts;
 using Services.Concretes;
+using Services.Configs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(
         builder.Configuration.GetConnectionString("DbConnectionForGreenBoxBH")
         )
     );
+var mapperConfig = new MapperConfiguration(
+    mc => mc.AddProfile(
+        new MapperProfile()
+        )
+);
+builder.Services.AddSingleton(mapperConfig.CreateMapper());
 
 var app = builder.Build();
 
