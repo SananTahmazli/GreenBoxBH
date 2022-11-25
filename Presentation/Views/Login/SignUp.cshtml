@@ -1,0 +1,63 @@
+﻿@model UserDTO
+
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+<div class="container py-5 h-auto">
+    <div class="row d-flex justify-content-center align-items-center h-100 center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+                    <form method="post">
+                        <h3>Sign Up</h3>
+
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" id="FullName" 
+                                placeholder="name@example.com" asp-for="FullName">
+                            <label for="FullName">Full Name</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" id="Username"
+                                placeholder="name@example.com" asp-for="Username">
+                            <label for="Username">Username</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <input type="email" class="form-control" id="Email"
+                                placeholder="name@example.com" asp-for="Email">
+                            <label for="Email">Email</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <input type="password" class="form-control" id="Password" 
+                                placeholder="Password" asp-for="Password">
+                            <label for="Password">Password</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <input type="date" class="form-control" id="BirthDate"
+                                placeholder="name@example.com" asp-for="BirthDate">
+                            <label for="BirthDate">Birth Date</label>
+                        </div>
+
+                        <br />
+                        <input class="btn btn-primary" type="submit"
+                               asp-controller="Login" asp-action="SignUp" value="Sign Up">
+
+                        @*<partial name="~/Views/Shared/Message.cshtml" />*@
+
+                        <br /> <br />
+                        <div class="form-outline mb-3">
+                            Have an account?
+                            &nbsp;
+                            <a class="form-label text-decoration-none" asp-controller="Login"
+                               asp-action="SignIn">Sign In</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
