@@ -1,4 +1,6 @@
-﻿using DataAccess.Entities;
+﻿using AutoMapper;
+using DataAccess;
+using DataAccess.Entities;
 using DTOs;
 using Services.Abstracts;
 using System;
@@ -11,6 +13,10 @@ namespace Services.Concretes
 {
     public class UserService : BaseService<UserDTO, User, UserDTO>, IUserService
     {
+        public UserService(IMapper mapper, ApplicationDbContext dbContext) : base(mapper, dbContext)
+        {
+        }
+
         public UserDTO Login(UserDTO dto)
         {
             return default(UserDTO);

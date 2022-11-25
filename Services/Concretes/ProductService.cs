@@ -1,4 +1,6 @@
-﻿using DataAccess.Entities;
+﻿using AutoMapper;
+using DataAccess;
+using DataAccess.Entities;
 using DTOs;
 using Services.Abstracts;
 using System;
@@ -11,5 +13,8 @@ namespace Services.Concretes
 {
     public class ProductService : BaseService<ProductDTO, Product, ProductDTO>, IProductService
     {
+        public ProductService(IMapper mapper, ApplicationDbContext dbContext) : base(mapper, dbContext)
+        {
+        }
     }
 }
