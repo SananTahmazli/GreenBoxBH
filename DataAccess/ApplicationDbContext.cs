@@ -13,6 +13,8 @@ namespace DataAccess
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
         }
 
         public DbSet<User>? Users { get; set; }
@@ -26,10 +28,13 @@ namespace DataAccess
                 new User
                 {
                     Id = 1,
+                    FullName = "AdminAdmin",
                     Username = "admin",
+                    BirthDate = DateTime.UtcNow,
+                    Email= "admin@gmail.com",
                     Salt = salt,
                     Hash = Encryption.GenerateHash("Admin", salt),
-                    CreatedTime = DateTime.Now,
+                    CreatedTime = DateTime.UtcNow,
                     CreatedUserId = 1
                 });
 
@@ -41,7 +46,8 @@ namespace DataAccess
                     Price = 5,
                     ImagePath = "~/images/product/book-1.png",
                     About = "About",
-                    CreatedTime = DateTime.Now,
+                    CountOfPages= 2,
+                    CreatedTime = DateTime.UtcNow,
                     CreatedUserId = 1
                 });
         }
