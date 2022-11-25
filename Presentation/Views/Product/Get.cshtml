@@ -1,1 +1,46 @@
-﻿
+﻿@model ProductDTO
+
+@{
+    if (Model != null)
+    {
+        <div class="row justify-content-center">
+            <partial name="~/Views/Shared/Notifications.cshtml" />
+
+            <div class="col-4 mx-3 my-3">
+                <img class="card-size-250" src=@Url.Content(@Model.ImagePath) width="320" height="320">
+            </div>
+
+            <div class="col-4 mx-3 my-5">
+                <div class="card border-primary">
+                    <div class="card-body">
+                        <h4 class="card-title">Name: @Model.Name</h4>
+                        <p class="card-text">Price: @Model.Price</p>
+
+                        <form method="post" asp-controller="Product" asp-action="AddToCart">
+
+                            <div class="form-outline mb-4">
+                                <label>Count:  </label>
+                                <input type="number" style="width:100px" value="1" name="Count" min="1" max="10" class="form-control form-control" />
+                            </div>
+
+                            <button type="submit" class="btn btn-warning">
+                                Add to Cart
+                            </button>
+
+                            <div class="form-outline mb-4">
+                                <input type="hidden" name="ProductId" value="@Model.Id" class="form-control form-control" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-body">
+                <p class="card-text">
+                    @Model.About
+                </p>
+            </div>
+        </div>
+    }
+}
