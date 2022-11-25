@@ -42,7 +42,7 @@ namespace Services.Concretes
         public virtual TResponseDTO Create(TRequestDTO dto)
         {
             var entity = _mapper.Map<TEntity>(dto);
-            entity.CreatedTime = DateTime.Now;
+            entity.CreatedTime = DateTime.UtcNow;
             _dbSet.Add(entity);
             _dbContext.SaveChanges();
             var responseDTO = _mapper.Map<TResponseDTO>(entity);
@@ -52,7 +52,7 @@ namespace Services.Concretes
         public virtual void Update(TRequestDTO dto)
         {
             var entity = _mapper.Map<TEntity>(dto);
-            entity.UpdatedTime = DateTime.Now;
+            entity.UpdatedTime = DateTime.UtcNow;
             _dbSet.Update(entity);
             _dbContext.SaveChanges();
         }
