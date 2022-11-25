@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DTOs;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Abstracts;
 
 namespace Presentation.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
@@ -12,18 +15,67 @@ namespace Presentation.Controllers
             _productService = productService;
         }
 
-        [HttpGet]
-        public IActionResult Get([FromRoute] int id)
+        [HttpGet("Product/Get/{id}")]
+        public IActionResult Get(int id, string message = null, bool isSuccess = true)
         {
-            var product = _productService.Get(id);
-            return View(product);
+            if (!string.IsNullOrEmpty(message))
+            {
+                if (isSuccess)
+                {
+                    ViewBag.Success = message;
+                }
+                else
+                {
+                    ViewBag.Error = message;
+                }
+            }
+
+            var res = _productService.Get(id);
+
+            if (res == null)
+            {
+                ViewBag.Error = "Book is not found!";
+                return View();
+            }
+            return View(res);
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int page = 1, int pageSize = 4, ProductSortOrder order = ProductSortOrder.NameAsc, string search = null, bool changeSort = false)
         {
-            var productList = _productService.GetAll();
-            return View(productList);
+            if (!string.IsNullOrEmpty(search))
+            {
+                ViewBag.Search = search;
+            }
+
+            int allProductsCount;
+            var res = _productService.GetFilter(out allProductsCount, page, pageSize, order, search);
+
+            ViewBag.HasPrevious = true;
+            ViewBag.HasNext = true;
+
+            if (page <= 1)
+            {
+                ViewBag.HasPrevious = false;
+            }
+            if (page * pageSize >= allProductsCount)
+            {
+                ViewBag.HasNext = false;
+            }
+
+            if (changeSort)
+            {
+                ViewBag.NameSort = order == ProductSortOrder.NameAsc ? ProductSortOrder.NameDesc : ProductSortOrder.NameAsc;
+                ViewBag.PriceSort = order == ProductSortOrder.PriceAsc ? ProductSortOrder.PriceDesc : ProductSortOrder.PriceAsc;
+            }
+            else
+            {
+                ViewBag.NameSort = order;
+                ViewBag.PriceSort = order;
+            }
+
+            var pagedRs = new PagedResponseDTO<ProductDTO>(page, pageSize, res);
+            return View(pagedRs);
         }
     }
 }
