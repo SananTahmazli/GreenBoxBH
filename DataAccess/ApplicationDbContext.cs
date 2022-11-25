@@ -1,4 +1,5 @@
 ﻿using DataAccess.Entities;
+using Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,33 @@ namespace DataAccess
 
         public DbSet<User>? Users { get; set; }
         public DbSet<Product>? Products { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var salt = Encryption.GenerateSalt();
+
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 1,
+                    Username = "admin",
+                    Salt = salt,
+                    Hash = Encryption.GenerateHash("Admin", salt),
+                    CreatedTime = DateTime.Now,
+                    CreatedUserId = 1
+                });
+
+            modelBuilder.Entity<Product>().HasData(
+                new Product
+                {
+                    Id = 1,
+                    Name = "Book-1",
+                    Price = 5,
+                    ImagePath = "~/images/product/book-1.png",
+                    About = "About",
+                    CreatedTime = DateTime.Now,
+                    CreatedUserId = 1
+                });
+        }
     }
 }

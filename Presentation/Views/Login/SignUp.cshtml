@@ -16,37 +16,40 @@
                             <input type="text" class="form-control" id="FullName" 
                                 placeholder="name@example.com" asp-for="FullName">
                             <label for="FullName">Full Name</label>
+                            <span style="color: red" asp-validation-for="FullName"></span>
                         </div>
 
                         <div class="form-floating mb-2">
                             <input type="text" class="form-control" id="Username"
                                 placeholder="name@example.com" asp-for="Username">
                             <label for="Username">Username</label>
+                            <span style="color: red" asp-validation-for="Username"></span>
                         </div>
 
                         <div class="form-floating mb-2">
                             <input type="email" class="form-control" id="Email"
                                 placeholder="name@example.com" asp-for="Email">
                             <label for="Email">Email</label>
+                            <span style="color: red" asp-validation-for="Email"></span>
                         </div>
 
                         <div class="form-floating mb-2">
                             <input type="password" class="form-control" id="Password" 
                                 placeholder="Password" asp-for="Password">
                             <label for="Password">Password</label>
+                            <span style="color: red" asp-validation-for="Password"></span>
                         </div>
 
                         <div class="form-floating mb-2">
                             <input type="date" class="form-control" id="BirthDate"
                                 placeholder="name@example.com" asp-for="BirthDate">
                             <label for="BirthDate">Birth Date</label>
+                            <span style="color: red" asp-validation-for="BirthDate"></span>
                         </div>
 
                         <br />
                         <input class="btn btn-primary" type="submit"
                                asp-controller="Login" asp-action="SignUp" value="Sign Up">
-
-                        @*<partial name="~/Views/Shared/Message.cshtml" />*@
 
                         <br /> <br />
                         <div class="form-outline mb-3">
