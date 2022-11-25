@@ -8,6 +8,14 @@ using System.Xml.Linq;
 
 namespace DTOs
 {
+    public enum ProductSortOrder
+    {
+        NameAsc,
+        NameDesc,
+        PriceAsc,
+        PriceDesc
+    }
+
     public class ProductDTO
     {
         public int Id { get; set; }
