@@ -1,5 +1,6 @@
 using AutoMapper;
 using DataAccess;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Services.Abstracts;
 using Services.Concretes;
@@ -23,6 +24,17 @@ var mapperConfig = new MapperConfiguration(
 );
 builder.Services.AddSingleton(mapperConfig.CreateMapper());
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(opt =>
+    {
+        opt.LoginPath = "/Login/SignIn";
+        opt.Cookie.HttpOnly = true;
+        opt.Cookie.Name = "AuthCookie";
+        opt.Cookie.MaxAge = TimeSpan.FromHours(24);
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,12 +48,15 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSession();
+
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Home}/{id?}");
 
 app.Run();
