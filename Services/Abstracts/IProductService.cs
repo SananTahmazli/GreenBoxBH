@@ -10,5 +10,6 @@ namespace Services.Abstracts
 {
     public interface IProductService : IBaseService<ProductDTO, Product, ProductDTO>
     {
+        IEnumerable<ProductDTO> GetFilter(out int prodCount, int page = 1, int pageSize = 4, ProductSortOrder order = ProductSortOrder.NameAsc, string search = null);
     }
 }
