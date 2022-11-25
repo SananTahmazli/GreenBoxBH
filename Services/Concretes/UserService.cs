@@ -20,7 +20,7 @@ namespace Services.Concretes
 
         public override UserDTO Create(UserDTO dto)
         {
-            var result = _dbContext.Users.Where(u => u.Username== dto.Username);
+            var result = _dbContext.Users.Where(u => u.Username.ToLower() == dto.Username.ToLower());
 
             if (result.Any())
             {
@@ -33,7 +33,7 @@ namespace Services.Concretes
 
         public UserDTO Login(UserDTO dto)
         {
-            var result = _dbContext.Users.Where(u => u.Username == dto.Username);
+            var result = _dbContext.Users.Where(u => u.Username.ToLower() == dto.Username.ToLower());
 
             if (result.Count() == 1)
             {
