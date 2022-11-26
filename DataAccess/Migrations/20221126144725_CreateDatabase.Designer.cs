@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221125194215_CreateDatabase")]
+    [Migration("20221126144725_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,44 @@ namespace DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("DataAccess.Entities.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Count")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("CreatedUserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UpdatedUserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Carts");
+                });
 
             modelBuilder.Entity("DataAccess.Entities.Product", b =>
                 {
@@ -69,7 +107,7 @@ namespace DataAccess.Migrations
                             Id = 1,
                             About = "About",
                             CountOfPages = 2,
-                            CreatedTime = new DateTime(2022, 11, 25, 19, 42, 15, 341, DateTimeKind.Utc).AddTicks(6982),
+                            CreatedTime = new DateTime(2022, 11, 26, 14, 47, 25, 417, DateTimeKind.Utc).AddTicks(5759),
                             CreatedUserId = 1,
                             ImagePath = "~/images/product/book-1.png",
                             Name = "Book-1",
@@ -125,17 +163,41 @@ namespace DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            BirthDate = new DateTime(2022, 11, 25, 19, 42, 15, 341, DateTimeKind.Utc).AddTicks(6265),
-                            CreatedTime = new DateTime(2022, 11, 25, 19, 42, 15, 341, DateTimeKind.Utc).AddTicks(6854),
+                            BirthDate = new DateTime(2022, 11, 26, 14, 47, 25, 417, DateTimeKind.Utc).AddTicks(5200),
+                            CreatedTime = new DateTime(2022, 11, 26, 14, 47, 25, 417, DateTimeKind.Utc).AddTicks(5615),
                             CreatedUserId = 1,
                             Email = "admin@gmail.com",
                             FullName = "AdminAdmin",
-                            Hash = "�$3\"�qw>+��Z��\"sySle�P:�*?�",
-                            Salt = "+jlsinWbE3KkexaI8iqZ0WurgYE3ELg20HlojwEhnVv+h7QlL28jj7vFcSFAIKfDEoW/GQq8v+0wTmyKws1k59HZTfFul/SUxZ0QdJSZdjloqE4yAuGu0ByIKYA0aVZq7jXAEPDf3Q6sSL4LtRKIV/0Tn+YcylZ+koxwTlWv1145YUu1FX6+m18EnnijJJTzGxdoRIp5odH2fcq+AcPCI/8geDIS2AoIGhNPacuwKwxGbJdIrmYLkx98YKFYQfjDbJX1Wd8BGyHgPNDkFhGfcQahy4zTndQcywPZTXIYY6M2zzRZ3E5JBPPcn3cSPVM9HNhy8IUE11ZnOj4KBdv8",
+                            Hash = "C�|�+P9�����J�!��e����߂�7�l",
+                            Salt = "IbpGM8m+PxCUW0JhEX+PeGS80MjsQHeMd4pCK/rIoiHtjGT6kJGpvPnp1OEUhKdKzktDha4y1cgDHPBrQ1KCCsilBaZrQ1tDxXSoN3K3p4r//MRQmyx05NAUD175t2or01zwCA/sg6goqpqyFiSO0knBH/OK0jIYVcaYcoNYUlgcpYIwXts3xFZlxFMzwoATUg+b8W/fWht0oh1hhyn5KOIGId5PEUKCG2o5hFl6RxrRJVFFUGAy4aHUGIn2ciu2pI/UMmcpg96U8XNUSkOZmnHwdaHOf6ELbhNaRBvdIUm4ZUTL6GVWM2b9WLXVQKfBg7GZ7DCh9BfAEbaRukM4",
                             UpdatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UpdatedUserId = 0,
                             Username = "admin"
                         });
+                });
+
+            modelBuilder.Entity("DataAccess.Entities.Cart", b =>
+                {
+                    b.HasOne("DataAccess.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataAccess.Entities.User", "User")
+                        .WithMany("Cart")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DataAccess.Entities.User", b =>
+                {
+                    b.Navigation("Cart");
                 });
 #pragma warning restore 612, 618
         }
