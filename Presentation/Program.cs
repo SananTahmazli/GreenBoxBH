@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddDbContext<ApplicationDbContext>(
     opt => opt.UseNpgsql(
         builder.Configuration.GetConnectionString("DbConnectionForGreenBoxBH")

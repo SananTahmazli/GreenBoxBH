@@ -1,0 +1,53 @@
+﻿@using System.Globalization;
+@model IEnumerable<CartDTO>
+
+@{
+    ViewData["Title"] = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Context?.User?.FindFirst(x => x.Type == "Username")?.Value ?? "").ToLower() + " - My Cart";
+}
+
+<div class="row justify-content-md-center mt-1 mb-5">
+    <div class="row">
+        <partial name="~/Views/Shared/Notifications.cshtml" />
+        <br />
+        @{
+            if (Model.Count() == 0)
+            {
+                <div class="alert alert-danger" role="alert">
+                    No products added to cart!
+                </div>
+            }
+
+            foreach (var cart in Model)
+            {
+                <div class="col-3 my-4">
+                    <div class="card card-size-250 bg-white text-dark">
+                        <img class="card-img-top" src=@Url.Content(@cart.ProductImagePath)
+                            title="@cart.ProductName">
+
+                        <div class="card-body">
+                            <h4 class="card-title">@cart.ProductName</h4>
+                            <p class="card-text">Count: @cart.Count</p>
+                            <p class="card-text">Price: $@cart.ProductPrice</p>
+                            <p class="card-text">Sum: $@cart.Sum</p>
+
+                            <hr>
+
+                            <form method="post" asp-controller="Cart" asp-action="Buy">
+                                <input type="hidden" value="@cart.Id" name="CartId">
+                                <input type="hidden" value="@cart.Sum" name="Sum">
+                                <input type="submit" class="btn btn-info" value="Buy">
+                            </form>
+
+                            &nbsp;
+
+                            <form method="post" asp-controller="Cart" asp-action="DeleteFromCart">
+                                <input type="hidden" name="cartId" value="@cart.Id">
+                                <input type="submit" class="btn btn-danger" value="Delete">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

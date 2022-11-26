@@ -17,6 +17,8 @@ namespace Services.Configs
             CreateMap<UserDTO, User>();
             CreateMap<Product, ProductDTO>();
             CreateMap<ProductDTO, Product>();
+            CreateMap<Cart, CartDTO>();
+            CreateMap<CartDTO, Cart>();
         }
     }
 }

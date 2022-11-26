@@ -1,4 +1,5 @@
 ﻿@using System.Globalization;
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -66,30 +67,24 @@
                     }
 
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a style="display:@((isAuth)? "block" :"none"); margin-right: 25px;" class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="nav-item">
+                            <a style="display:@((isAuth)? "block" :"none")" class="nav-link active" asp-controller="Cart" asp-action="GetCart">
+                                My Cart
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a style="display:@((isAuth)? "block" :"none")" class="nav-link active" href="#">
                                 @CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Context?.User?.FindFirst(x=>x.Type=="Username")?.Value ?? "").ToLower()
                             </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                    </svg>
-                                        My Profile
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a style="color: red" class="dropdown-item" asp-controller="Login" asp-action="SignOut">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
-                                        <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
-                                    </svg>
-                                        Sign Out
-                                    </a>
-                                </li>
-                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a style="display:@((isAuth)? "block" :"none"); color: red" class="nav-link active" asp-controller="Login" asp-action="SignOut">
+                                Sign Out
+                            </a>
+                        </li>
+
                         <li class="nav-item">
                             <a style="display:@((isAuth)? "none" :"block")" class="nav-link active" asp-controller="Login" asp-action="SignIn">Sign In</a>
                         </li>
