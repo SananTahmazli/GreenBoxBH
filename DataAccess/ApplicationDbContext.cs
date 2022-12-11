@@ -18,11 +18,30 @@ namespace DataAccess
         }
 
         public DbSet<User>? Users { get; set; }
+        public DbSet<Role>? Roles { get; set; }
         public DbSet<Product>? Products { get; set; }
         public DbSet<Cart>? Carts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Role>().HasData(
+                new Role
+                {
+                    Id = 1,
+                    Name = "Admin",
+                    CreatedTime = DateTime.UtcNow,
+                    CreatedUserId = 1
+                });
+
+            modelBuilder.Entity<Role>().HasData(
+                new Role
+                {
+                    Id = 2,
+                    Name = "User",
+                    CreatedTime = DateTime.UtcNow,
+                    CreatedUserId = 1
+                });
+
             var salt = Encryption.GenerateSalt();
 
             modelBuilder.Entity<User>().HasData(
@@ -35,6 +54,7 @@ namespace DataAccess
                     Email= "admin@gmail.com",
                     Salt = salt,
                     Hash = Encryption.GenerateHash("Admin", salt),
+                    RoleId = 1,
                     CreatedTime = DateTime.UtcNow,
                     CreatedUserId = 1
                 });
