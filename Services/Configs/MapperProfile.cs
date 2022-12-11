@@ -13,12 +13,18 @@ namespace Services.Configs
     {
         public MapperProfile()
         {
-            CreateMap<User, UserDTO>();
             CreateMap<UserDTO, User>();
-            CreateMap<Product, ProductDTO>();
+            CreateMap<User, UserDTO>()
+                .ForMember(dst => dst.RoleName, x => x.MapFrom(src => src.Role.Name));
+
             CreateMap<ProductDTO, Product>();
-            CreateMap<Cart, CartDTO>();
+            CreateMap<Product, ProductDTO>();
+
             CreateMap<CartDTO, Cart>();
+            CreateMap<Cart, CartDTO>()
+                .ForMember(dst => dst.ProductName, x => x.MapFrom(src => src.Product.Name))
+                .ForMember(dst => dst.ProductImagePath, x => x.MapFrom(src => src.Product.ImagePath))
+                .ForMember(dst => dst.ProductPrice, x => x.MapFrom(src => src.Product.Price));
         }
     }
 }
