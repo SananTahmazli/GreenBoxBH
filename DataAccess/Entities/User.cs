@@ -14,8 +14,6 @@ namespace DataAccess.Entities
         public string? Salt { get; set; }
         public string? Hash { get; set; }
         public DateTime BirthDate { get; set; }
-        public int RoleId { get; set; }
-        public Role? Role { get; set; }
         public List<Cart> Cart { get; set; } = new List<Cart>();
     }
 }

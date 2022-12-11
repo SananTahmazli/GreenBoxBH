@@ -105,59 +105,11 @@ namespace DataAccess.Migrations
                             Id = 1,
                             About = "About",
                             CountOfPages = 2,
-                            CreatedTime = new DateTime(2022, 12, 11, 10, 11, 16, 535, DateTimeKind.Utc).AddTicks(1735),
+                            CreatedTime = new DateTime(2022, 11, 26, 14, 47, 25, 417, DateTimeKind.Utc).AddTicks(5759),
                             CreatedUserId = 1,
                             ImagePath = "~/images/product/book-1.png",
                             Name = "Book-1",
                             Price = 5.0,
-                            UpdatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUserId = 0
-                        });
-                });
-
-            modelBuilder.Entity("DataAccess.Entities.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("CreatedUserId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("UpdatedTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("UpdatedUserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedTime = new DateTime(2022, 12, 11, 14, 11, 16, 535, DateTimeKind.Local).AddTicks(645),
-                            CreatedUserId = 1,
-                            Name = "Admin",
-                            UpdatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUserId = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedTime = new DateTime(2022, 12, 11, 14, 11, 16, 535, DateTimeKind.Local).AddTicks(688),
-                            CreatedUserId = 1,
-                            Name = "User",
                             UpdatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UpdatedUserId = 0
                         });
@@ -189,9 +141,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("Hash")
                         .HasColumnType("text");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Salt")
                         .HasColumnType("text");
 
@@ -206,22 +155,19 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("Users");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            BirthDate = new DateTime(2022, 12, 11, 10, 11, 16, 535, DateTimeKind.Utc).AddTicks(1169),
-                            CreatedTime = new DateTime(2022, 12, 11, 10, 11, 16, 535, DateTimeKind.Utc).AddTicks(1703),
+                            BirthDate = new DateTime(2022, 11, 26, 14, 47, 25, 417, DateTimeKind.Utc).AddTicks(5200),
+                            CreatedTime = new DateTime(2022, 11, 26, 14, 47, 25, 417, DateTimeKind.Utc).AddTicks(5615),
                             CreatedUserId = 1,
                             Email = "admin@gmail.com",
                             FullName = "AdminAdmin",
-                            Hash = "�*�I�p�u�`��h�:�BL]4%��?%vA��'",
-                            RoleId = 1,
-                            Salt = "g8VphNtyxSrGiZo/fAKC4AO+mSLQ2MbPso5nb7zIsAxMs320Cu0h0zwraHgqfJLra6wihqLx793hyxiJsaXZ30i9g1Y4RZz/xM9cbKW1/H7TR9tLiR32uEm9/rpTLvzm0JBLDk5vv1Up4tbuoSucCswIytwpz5g4bcgUGSbVjL/i9/cDXgirdQRP5aTGaUfYlpdYRqXXT9c8lDIPsJAcGUt2fnkfn5t9G027WIl2U9fHziM552F/7YGsESQR7DDQlm3Q+nb9wub8W+ea1E0nZSJH9gW7gUXShPopAsDnvolFIn2iYBlGQOSDSh/LCcQBLmjzkAgSC80gDKmYYgeG",
+                            Hash = "C�|�+P9�����J�!��e����߂�7�l",
+                            Salt = "IbpGM8m+PxCUW0JhEX+PeGS80MjsQHeMd4pCK/rIoiHtjGT6kJGpvPnp1OEUhKdKzktDha4y1cgDHPBrQ1KCCsilBaZrQ1tDxXSoN3K3p4r//MRQmyx05NAUD175t2or01zwCA/sg6goqpqyFiSO0knBH/OK0jIYVcaYcoNYUlgcpYIwXts3xFZlxFMzwoATUg+b8W/fWht0oh1hhyn5KOIGId5PEUKCG2o5hFl6RxrRJVFFUGAy4aHUGIn2ciu2pI/UMmcpg96U8XNUSkOZmnHwdaHOf6ELbhNaRBvdIUm4ZUTL6GVWM2b9WLXVQKfBg7GZ7DCh9BfAEbaRukM4",
                             UpdatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UpdatedUserId = 0,
                             Username = "admin"
@@ -231,7 +177,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataAccess.Entities.Cart", b =>
                 {
                     b.HasOne("DataAccess.Entities.Product", "Product")
-                        .WithMany("Carts")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -245,27 +191,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DataAccess.Entities.User", b =>
-                {
-                    b.HasOne("DataAccess.Entities.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("DataAccess.Entities.Product", b =>
-                {
-                    b.Navigation("Carts");
-                });
-
-            modelBuilder.Entity("DataAccess.Entities.Role", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("DataAccess.Entities.User", b =>
