@@ -11,7 +11,7 @@ namespace Services.Abstracts
         IEnumerable<TResponseDTO> GetAll();
         TResponseDTO Get(int id);
         TResponseDTO Create(TRequestDTO dto);
-        void Update(TRequestDTO dto);
-        int Delete(int id);
+        TResponseDTO Update(TRequestDTO dto);
+        void Delete(TRequestDTO dto);
     }
 }
