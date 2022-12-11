@@ -32,6 +32,23 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    CreatedUserId = table.Column<int>(type: "integer", nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedUserId = table.Column<int>(type: "integer", nullable: false),
+                    UpdatedTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -43,6 +60,7 @@ namespace DataAccess.Migrations
                     Salt = table.Column<string>(type: "text", nullable: true),
                     Hash = table.Column<string>(type: "text", nullable: true),
                     BirthDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    RoleId = table.Column<int>(type: "integer", nullable: false),
                     CreatedUserId = table.Column<int>(type: "integer", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     UpdatedUserId = table.Column<int>(type: "integer", nullable: false),
@@ -51,6 +69,12 @@ namespace DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,12 +111,21 @@ namespace DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "About", "CountOfPages", "CreatedTime", "CreatedUserId", "ImagePath", "Name", "Price", "UpdatedTime", "UpdatedUserId" },
-                values: new object[] { 1, "About", 2, new DateTime(2022, 11, 26, 14, 47, 25, 417, DateTimeKind.Utc).AddTicks(5759), 1, "~/images/product/book-1.png", "Book-1", 5.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0 });
+                values: new object[] { 1, "About", 2, new DateTime(2022, 12, 11, 10, 11, 16, 535, DateTimeKind.Utc).AddTicks(1735), 1, "~/images/product/book-1.png", "Book-1", 5.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0 });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "CreatedTime", "CreatedUserId", "Name", "UpdatedTime", "UpdatedUserId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2022, 12, 11, 14, 11, 16, 535, DateTimeKind.Local).AddTicks(645), 1, "Admin", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0 },
+                    { 2, new DateTime(2022, 12, 11, 14, 11, 16, 535, DateTimeKind.Local).AddTicks(688), 1, "User", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "BirthDate", "CreatedTime", "CreatedUserId", "Email", "FullName", "Hash", "Salt", "UpdatedTime", "UpdatedUserId", "Username" },
-                values: new object[] { 1, new DateTime(2022, 11, 26, 14, 47, 25, 417, DateTimeKind.Utc).AddTicks(5200), new DateTime(2022, 11, 26, 14, 47, 25, 417, DateTimeKind.Utc).AddTicks(5615), 1, "admin@gmail.com", "AdminAdmin", "C�|�+P9�����J�!��e����߂�7�l", "IbpGM8m+PxCUW0JhEX+PeGS80MjsQHeMd4pCK/rIoiHtjGT6kJGpvPnp1OEUhKdKzktDha4y1cgDHPBrQ1KCCsilBaZrQ1tDxXSoN3K3p4r//MRQmyx05NAUD175t2or01zwCA/sg6goqpqyFiSO0knBH/OK0jIYVcaYcoNYUlgcpYIwXts3xFZlxFMzwoATUg+b8W/fWht0oh1hhyn5KOIGId5PEUKCG2o5hFl6RxrRJVFFUGAy4aHUGIn2ciu2pI/UMmcpg96U8XNUSkOZmnHwdaHOf6ELbhNaRBvdIUm4ZUTL6GVWM2b9WLXVQKfBg7GZ7DCh9BfAEbaRukM4", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "admin" });
+                columns: new[] { "Id", "BirthDate", "CreatedTime", "CreatedUserId", "Email", "FullName", "Hash", "RoleId", "Salt", "UpdatedTime", "UpdatedUserId", "Username" },
+                values: new object[] { 1, new DateTime(2022, 12, 11, 10, 11, 16, 535, DateTimeKind.Utc).AddTicks(1169), new DateTime(2022, 12, 11, 10, 11, 16, 535, DateTimeKind.Utc).AddTicks(1703), 1, "admin@gmail.com", "AdminAdmin", "�*�I�p�u�`��h�:�BL]4%��?%vA��'", 1, "g8VphNtyxSrGiZo/fAKC4AO+mSLQ2MbPso5nb7zIsAxMs320Cu0h0zwraHgqfJLra6wihqLx793hyxiJsaXZ30i9g1Y4RZz/xM9cbKW1/H7TR9tLiR32uEm9/rpTLvzm0JBLDk5vv1Up4tbuoSucCswIytwpz5g4bcgUGSbVjL/i9/cDXgirdQRP5aTGaUfYlpdYRqXXT9c8lDIPsJAcGUt2fnkfn5t9G027WIl2U9fHziM552F/7YGsESQR7DDQlm3Q+nb9wub8W+ea1E0nZSJH9gW7gUXShPopAsDnvolFIn2iYBlGQOSDSh/LCcQBLmjzkAgSC80gDKmYYgeG", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_ProductId",
@@ -103,6 +136,11 @@ namespace DataAccess.Migrations
                 name: "IX_Carts_UserId",
                 table: "Carts",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_RoleId",
+                table: "Users",
+                column: "RoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -115,6 +153,9 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
         }
     }
 }

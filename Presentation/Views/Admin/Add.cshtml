@@ -1,0 +1,37 @@
+﻿@model ProductDTO
+
+@{
+    ViewData["Title"] = "Add Book";
+}
+
+<form method="post" asp-controller="Admin" asp-action="Add">
+    <h3 class="mb-5 text-white">Add Book</h3>
+
+    <partial name="~/Views/Shared/Notifications.cshtml" />
+
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="Name"
+            placeholder="name@example.com" asp-for="Name">
+        <label for="Name">Name</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="number" min="1" class="form-control" id="CountOfPages"
+               placeholder="name@example.com" asp-for="CountOfPages">
+        <label for="CountOfPages">Count Of Pages</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="Price"
+               placeholder="name@example.com" asp-for="Price">
+        <label for="Price">Price</label>
+    </div>
+
+    <div class="mb-3">
+        <textarea placeholder="Write about..." class="form-control" rows="5" style="resize: none" asp-for="About"></textarea>
+    </div>
+
+    <button class="btn btn-primary" type="submit">
+        Add
+    </button>
+</form>

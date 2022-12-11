@@ -13,5 +13,6 @@ namespace DataAccess.Entities
         public string? ImagePath { get; set; }
         public int CountOfPages { get; set; }
         public double Price { get; set; }
+        public List<Cart>? Carts { get; set; }
     }
 }
