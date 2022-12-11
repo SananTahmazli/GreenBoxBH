@@ -13,6 +13,8 @@ namespace DataAccess.Entities
         public string? Email { get; set; }
         public string? Salt { get; set; }
         public string? Hash { get; set; }
+        public int RoleId { get; set; }
+        public Role? Role { get; set; }
         public DateTime BirthDate { get; set; }
         public List<Cart> Cart { get; set; } = new List<Cart>();
     }
