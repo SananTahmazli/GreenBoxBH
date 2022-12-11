@@ -25,6 +25,8 @@ namespace DTOs
         public string? Password { get; set; }
         public string? Salt { get; set; }
         public string? Hash { get; set; }
+        public int RoleId { get; set; }
+        public string? RoleName { get; set; }
         public DateTime BirthDate { get; set; }
     }
 }
