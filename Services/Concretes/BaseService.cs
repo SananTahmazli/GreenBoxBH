@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DataAccess;
 using DataAccess.Entities;
+using DTOs;
 using Microsoft.EntityFrameworkCore;
 using Services.Abstracts;
 using System;
@@ -49,20 +50,21 @@ namespace Services.Concretes
             return responseDTO;
         }
 
-        public virtual void Update(TRequestDTO dto)
+        public virtual TResponseDTO Update(TRequestDTO dto)
         {
             var entity = _mapper.Map<TEntity>(dto);
             entity.UpdatedTime = DateTime.UtcNow;
             _dbSet.Update(entity);
             _dbContext.SaveChanges();
+            var responseDTO = _mapper.Map<TResponseDTO>(entity);
+            return responseDTO;
         }
 
-        public virtual int Delete(int id)
+        public virtual void Delete(TRequestDTO dto)
         {
-            var entity = _dbSet.Find(id);
+            var entity = _mapper.Map<TEntity>(dto);
             _dbSet.Remove(entity);
             _dbContext.SaveChanges();
-            return entity.Id;
         }
     }
 }

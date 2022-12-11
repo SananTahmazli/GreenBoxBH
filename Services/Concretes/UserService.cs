@@ -3,6 +3,7 @@ using DataAccess;
 using DataAccess.Entities;
 using DTOs;
 using Helpers;
+using Microsoft.EntityFrameworkCore;
 using Services.Abstracts;
 using System;
 using System.Collections.Generic;
@@ -21,11 +22,14 @@ namespace Services.Concretes
         public override UserDTO Create(UserDTO dto)
         {
             var result = _dbContext.Users.Where(u => u.Username.ToLower() == dto.Username.ToLower());
+            var role = _dbContext.Roles.Where(u => u.Name == RoleKeywords.UserRole)?.First();
+            dto.RoleId = role.Id;
 
             if (result.Any())
             {
                 throw new Exception("Username is already taken!");
             }
+
             dto.Salt = Encryption.GenerateSalt();
             dto.Hash = Encryption.GenerateHash(dto.Password, dto.Salt);
             return base.Create(dto);
@@ -33,7 +37,8 @@ namespace Services.Concretes
 
         public UserDTO Login(UserDTO dto)
         {
-            var result = _dbContext.Users.Where(u => u.Username.ToLower() == dto.Username.ToLower());
+            var result = _dbContext.Users.Where(u => u.Username.ToLower() == dto.Username.ToLower())
+                .Include(u => u.Role);
 
             if (result.Count() == 1)
             {
