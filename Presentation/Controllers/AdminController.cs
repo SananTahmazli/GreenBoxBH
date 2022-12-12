@@ -85,7 +85,7 @@ namespace Presentation.Controllers
             return View(res);
         }
 
-        [HttpGet]
+        [HttpGet("Admin/GetAll")]
         public IActionResult GetAll(int page = 1, int pageSize = 4, ProductSortOrder order = ProductSortOrder.NameAsc, string search = null, bool changeSort = false)
         {
             if (!string.IsNullOrEmpty(search))
