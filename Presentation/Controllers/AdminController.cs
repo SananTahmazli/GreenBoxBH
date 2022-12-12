@@ -31,6 +31,7 @@ namespace Presentation.Controllers
             }
 
             _productService.Create(dto);
+            ViewBag.Success = "Book was added successfully to our website!";
             return View();
         }
 
@@ -50,6 +51,7 @@ namespace Presentation.Controllers
             }
 
             var res = _productService.Update(dto);
+            ViewBag.Success = "Book was updated successfully!";
             return View("Update", res);
         }
 
