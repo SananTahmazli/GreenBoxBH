@@ -5,8 +5,8 @@
 }
 
 <form method="post" asp-controller="Admin" asp-action="UpdateDTO" asp-route-id="@Model.Id">
-    <h3 class="mt-3">Update Book</h3>
-    <br /> <br />
+    <h3 class="mt-3 text-white">Update Book</h3>
+    <br />
     <partial name="~/Views/Shared/Notifications.cshtml" />
 
     <div class="form-floating mb-3">
@@ -33,10 +33,9 @@
         <label for="Price">Price</label>
     </div>
 
-    <div class="form-floating mb-3">
+    <div class="mb-3">
         <textarea class="form-control" id="About"
-                  rows="5" asp-for="About">@Model.About</textarea>
-        <label for="About" class="form-label">About Book</label>
+                  rows="5" asp-for="About" placeholder="Write about book...">@Model.About</textarea>
     </div>
 
     <button class="btn btn-success" type="submit">Save</button>
