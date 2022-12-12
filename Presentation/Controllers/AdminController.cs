@@ -23,7 +23,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddDTO(ProductDTO dto)
+        public IActionResult Add(ProductDTO dto)
         {
             if (string.IsNullOrEmpty(dto.ImagePath))
             {
