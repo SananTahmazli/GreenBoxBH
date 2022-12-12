@@ -19,7 +19,11 @@
                 <div class="card border-primary">
                     <div class="card-body">
                         <h4 class="card-title">Name: @Model.Name</h4>
-                        <p class="card-text">Price: @Model.Price</p>
+                        <p class="card-text">
+                            Price: @Model.Price
+                            <br>
+                            Count of Pages: @Model.CountOfPages
+                        </p>
 
                         <form method="post" asp-controller="Cart" asp-action="AddToCart">
                             <div class="form-outline mb-4">
