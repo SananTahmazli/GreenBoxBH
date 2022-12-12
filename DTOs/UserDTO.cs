@@ -27,6 +27,8 @@ namespace DTOs
         public string? Hash { get; set; }
         public int RoleId { get; set; }
         public string? RoleName { get; set; }
+        [Required]
+        [Display(Name = "birth date")]
         public DateTime BirthDate { get; set; }
     }
 }
