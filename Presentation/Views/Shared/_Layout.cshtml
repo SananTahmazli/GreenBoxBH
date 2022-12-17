@@ -58,9 +58,13 @@
                                 </li>
                             </ul>
                         </li>
+                    @{
+                        var isAdmin = Context.User.IsInRole(RoleKeywords.AdminRole);
+
                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Product" asp-action="GetAll">Our Books</a>
+                            <a style="display:@((isAdmin)? "none" :"block")" class="nav-link active" asp-controller="Product" asp-action="GetAll">Our Books</a>
                         </li>
+                    }
                     </ul>
 
                     @{
@@ -81,7 +85,7 @@
                         </li>
 
                         @{
-                            var isAdmin = Context.User.IsInRole(RoleKeywords.AdminRole);
+                            isAdmin = Context.User.IsInRole(RoleKeywords.AdminRole);
                       
                             <a style="display:@((isAdmin)? "block" :"none")" class="btn btn-primary"
                                 asp-controller="Admin" asp-action="GetAll">Admin Panel</a>
