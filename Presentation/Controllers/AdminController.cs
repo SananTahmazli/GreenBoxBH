@@ -10,10 +10,12 @@ namespace Presentation.Controllers
     public class AdminController : Controller
     {
         private readonly IProductService _productService;
+        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
 
-        public AdminController(IProductService productService)
+        public AdminController(IProductService productService, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
         {
             _productService = productService;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpGet]
@@ -25,9 +27,20 @@ namespace Presentation.Controllers
         [HttpPost]
         public IActionResult Add(ProductDTO dto)
         {
+            string uniqueFileName = null;
+
             if (string.IsNullOrEmpty(dto.ImagePath))
             {
                 dto.ImagePath = "~/images/product/book-1.png";
+            }
+
+            if (dto.Image != null)
+            {
+                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images/product");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + dto.Image.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                dto.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+                dto.ImagePath = "~/images/product/" + uniqueFileName;
             }
 
             _productService.Create(dto);
@@ -45,9 +58,20 @@ namespace Presentation.Controllers
         [HttpPost]
         public IActionResult UpdateDTO(ProductDTO dto)
         {
+            string uniqueFileName = null;
+
             if (string.IsNullOrEmpty(dto.ImagePath))
             {
                 dto.ImagePath = "~/images/product/book-1.png";
+            }
+
+            if (dto.Image != null)
+            {
+                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images/product");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + dto.Image.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                dto.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+                dto.ImagePath = "~/images/product/" + uniqueFileName;
             }
 
             var res = _productService.Update(dto);
