@@ -12,6 +12,6 @@ namespace Services.Abstracts
         TResponseDTO Get(int id);
         TResponseDTO Create(TRequestDTO dto);
         TResponseDTO Update(TRequestDTO dto);
-        void Delete(TRequestDTO dto);
+        void Delete(int id);
     }
 }

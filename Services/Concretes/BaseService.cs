@@ -60,9 +60,9 @@ namespace Services.Concretes
             return responseDTO;
         }
 
-        public virtual void Delete(TRequestDTO dto)
+        public virtual void Delete(int id)
         {
-            var entity = _mapper.Map<TEntity>(dto);
+            var entity = _dbSet.Find(id);
             _dbSet.Remove(entity);
             _dbContext.SaveChanges();
         }
