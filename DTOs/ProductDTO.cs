@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -26,8 +27,11 @@ namespace DTOs
         [Display(Name = "about")]
         public string? About { get; set; }
         [Required]
-        [Display(Name = "image")]
+        [Display(Name = "image path")]
         public string? ImagePath { get; set; }
+        [Required]
+        [Display(Name = "image")]
+        public IFormFile? Image { get; set; }
         [Required]
         [Display(Name = "count of pages")]
         public int CountOfPages { get; set; }
