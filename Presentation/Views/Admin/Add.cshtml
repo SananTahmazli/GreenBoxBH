@@ -4,7 +4,8 @@
     ViewData["Title"] = "Add New Book";
 }
 
-<form method="post" enctype="multipart/form-data" asp-controller="Admin" asp-action="Add">
+<form method="post" enctype="multipart/form-data"
+      asp-controller="Admin" asp-action="Add" autocomplete="off">
     <h3 class="mt-3">Add New Book</h3>
     <br />
     <partial name="~/Views/Shared/Notifications.cshtml" />
