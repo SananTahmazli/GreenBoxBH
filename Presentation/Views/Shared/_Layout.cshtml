@@ -87,7 +87,7 @@
                         @{
                             isAdmin = Context.User.IsInRole(RoleKeywords.AdminRole);
                       
-                            <a style="display:@((isAdmin)? "block" :"none")" class="btn btn-primary"
+                            <a style="display:@((isAdmin)? "block" :"none")" class="btn btn-warning"
                                 asp-controller="Admin" asp-action="GetAll">Admin Panel</a>
                         }
 
