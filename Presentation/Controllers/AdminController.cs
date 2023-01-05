@@ -56,9 +56,9 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteDTO(ProductDTO dto)
+        public IActionResult DeleteDTO(int id)
         {
-            _productService.Delete(dto);
+            _productService.Delete(id);
             return RedirectToAction("GetAll", "Admin");
         }
 
