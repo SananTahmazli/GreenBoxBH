@@ -39,6 +39,7 @@
     @{
         foreach (var product in Model.Values)
         {
+            var photoPath = "~/images/product/" + (product.ImagePath ?? "book-1.png");
             <div class="col-3 my-4">
                 <a style="text-decoration:none" class="" asp-controller="Product" asp-action="Get" asp-route-id=@product.Id>
                     <div class="card card-size-250 bg-white text-dark">
